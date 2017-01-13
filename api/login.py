@@ -2,6 +2,7 @@
 from flask import request, render_template
 from . import app
 import hashlib,json,time
+import utils
 
 #用户登录验证
 @app.route('/api/login',methods=['GET'])
@@ -20,6 +21,7 @@ def login():
         if passwd == result['password']:
             data = {'last_login': time.strftime('%Y-%m-%d %H:%M:%S')}
             app.config['db'].execute_update_sql('user', data, {'username':username})
+            token = utils.get_validate(username, result['uid'], result['r_id'])
             return json.dumps({'code':0, 'authorization': token})
         else:
             return json.dumps({'code':1, 'errmsg':"passwd is wrong"})
