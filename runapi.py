@@ -11,3 +11,7 @@ app.config.update(config)
 
 #将数据库实例加到全局大字典
 app.config['db'] = db.Cursor(config)
+print app.config
+
+if __name__ == '__main__':
+    app.run(host=app.config['bind'],port=int(app.config['port']),debug=False)
