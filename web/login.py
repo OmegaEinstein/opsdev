@@ -12,12 +12,12 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('passwd')
-        url = "http://%s/api/login?username=%s&passwd=%s" % ('apihost', username, password)
+        url = "http://%s/api/login?username=%s&passwd=%s" % (app.config['api_host'], username, password)
         r = requests.get(url, headers=headers) #请求api验证用户，并获取token
         result = json.loads(r.content)
         if result['code'] == 0:
             token = result['authorization']
-            res = utils.validate(token,'passport_key')
+            res = utils.validate(token,app.config['passport_key'])
             res = json.loads(res)
             session['author'] = token
             session['username'] = username
