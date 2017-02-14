@@ -4,7 +4,7 @@ from . import app
 import json,traceback
 import utils
 
-
+#validate user
 def auth_login(func):
     def wrapper(*arg, **kwargs):
         try:

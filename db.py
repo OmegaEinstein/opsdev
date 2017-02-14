@@ -50,6 +50,9 @@ class Cursor():
     def _fetchone(self):
         return self.cur.fetchone()
 
+    def _fetchall(self):
+        return self.cur.fetchall()
+
     def execute_update_sql(self, table_name, data, where, fields=None):
         sql = self._update_sql(table_name, data, where, fields)
         if sql:
@@ -78,3 +81,9 @@ class Cursor():
             return dict([(k, '' if result_set[i] is None else result_set[i]) for i,k in enumerate(fields)])
         else:
             return {}
+
+    def get_results(self, table_name, fields, where=None, order=None, asc_order=True, limit=None):
+        sql = self._select_sql_(table_name, fields, where, order, asc_order, limit)
+        self._execute(sql)
+        result_sets = self._fetchall()
+        return [dict([(k, '' if row[i] is None else row[i]) for i,k in enumerate(fields)]) for row in result_sets]

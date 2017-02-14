@@ -1,7 +1,10 @@
+#coding:utf-8
 from web import app
 import utils
 
 app.secret_key = 'adlj;ja;dlk'
+#app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+
 
 config = utils.get_config('web')
 app.config.update(config)
